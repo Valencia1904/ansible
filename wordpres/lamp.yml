@@ -1,0 +1,26 @@
+---
+- hosts: maquinas
+
+  tasks:
+    - name: Cambiarle repositorios
+      copy: src=soleares dest=/etc/apt/sources.list mode=0644
+
+    - name: Actualizar repositorios
+      apt: update_cache=yes
+
+    - name: Actualizando maquinas
+      apt: upgrade=full
+
+    - name: instalando paquetes.
+      apt: name={{ item }} state=installed
+      with_items:
+        - php5
+        - apache2
+        - mysql-server
+        - php5-mysql
+        - python-mysqldb
+
+    - name: 
+
+    - name: Restart Apache
+      service: name=apache2 state=restarted
